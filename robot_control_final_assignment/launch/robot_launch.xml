@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="robot_control_final_assignment" type="angle_filter" name="scan_left_node" output="screen">
+      <param name="scan_topic" value="scan_left"/>
+      <param name="min_angle" value="1.4"/>
+      <param name="max_angle" value="1.57"/>
+    </node>
+    <node pkg="robot_control_final_assignment" type="angle_filter" name="scan_right_node" output="screen">
+      <param name="scan_topic" value="scan_right"/>
+      <param name="min_angle" value="-1.57"/>
+      <param name="max_angle" value="-1.4"/>
+    </node>
+    <node pkg="robot_control_final_assignment" type="angle_filter" name="scan_front_node" output="screen">
+      <param name="scan_topic" value="scan_front"/>
+      <param name="min_angle" value="-0.7"/>
+      <param name="max_angle" value="0.7"/>
+    </node>
+    <node pkg="robot_control_final_assignment" type="ui" name="ui_node" output="screen">
+    </node>
+</launch>
