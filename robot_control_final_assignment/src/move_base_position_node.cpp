@@ -1,9 +1,28 @@
+/**
+* \file move_base_position_node.cpp
+* \brief Moves the robot to a selected goal (x,y).
+* \author Paul Raingeard de la Blétière
+* \version 1.0
+* \date 12/03/2022
+* \details
+*
+* Publishes to: <BR>
+* ° /move_base/cancel
+*
+*
+* Description :
+*
+* This node publishes the desired goal on the action server and stops the goal if it was not reached after the timeout (30s).
+* 
+*
+**/
+
 #include <ros/ros.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib_msgs/GoalID.h>
 
-typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
+typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient; ///<Move Base Client.
 
 int main(int argc, char **argv)
 {

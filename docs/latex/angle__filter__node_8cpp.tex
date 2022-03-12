@@ -1,0 +1,90 @@
+\hypertarget{angle__filter__node_8cpp}{}\doxysection{src/angle\+\_\+filter\+\_\+node.cpp File Reference}
+\label{angle__filter__node_8cpp}\index{src/angle\_filter\_node.cpp@{src/angle\_filter\_node.cpp}}
+
+
+Filter angle ranges from a Laser\+Scan.  
+
+
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sensor\+\_\+msgs/\+Laser\+Scan.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for angle\+\_\+filter\+\_\+node.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{angle__filter__node_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{angle__filter__node_8cpp_a3c965e0c2a6e544b25adb0a8e8a05640}{scan\+Callback}} (const sensor\+\_\+msgs\+::\+Laser\+Scan \&msg)
+\begin{DoxyCompactList}\small\item\em Gets the scan values and publishes the chosen range to the scan topic. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{angle__filter__node_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{angle__filter__node_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+int {\bfseries main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{angle__filter__node_8cpp_a350594df3e8f6948c8462edfd41ce086}\label{angle__filter__node_8cpp_a350594df3e8f6948c8462edfd41ce086}} 
+ros\+::\+Publisher \mbox{\hyperlink{angle__filter__node_8cpp_a350594df3e8f6948c8462edfd41ce086}{pub}}
+\begin{DoxyCompactList}\small\item\em Publisher to the scan topic. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{angle__filter__node_8cpp_af05aefcf0605b217fe56f6c9971937cc}\label{angle__filter__node_8cpp_af05aefcf0605b217fe56f6c9971937cc}} 
+double \mbox{\hyperlink{angle__filter__node_8cpp_af05aefcf0605b217fe56f6c9971937cc}{min\+\_\+angle\+\_\+scan}}
+\begin{DoxyCompactList}\small\item\em Minimum angle of the chosen range. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{angle__filter__node_8cpp_a906bb3bee454d21af02c2823e689a814}\label{angle__filter__node_8cpp_a906bb3bee454d21af02c2823e689a814}} 
+double \mbox{\hyperlink{angle__filter__node_8cpp_a906bb3bee454d21af02c2823e689a814}{max\+\_\+angle\+\_\+scan}}
+\begin{DoxyCompactList}\small\item\em Maximum angle of the chosen range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Filter angle ranges from a Laser\+Scan. 
+
+\begin{DoxyAuthor}{Author}
+Paul Raingeard de la Blétière 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+12/03/2022 
+\end{DoxyDate}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em min\+\_\+angle} & Define the minimum angle of the chosen range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+\_\+angle} & Define the maximum angle of the chosen range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em scan\+\_\+topic} & Define the topic name for the published scan.\\
+\hline
+\end{DoxyParams}
+Subscribes to\+: ~\newline
+ ° /scan
+
+Publishes to\+: ~\newline
+ ° /scan\+\_\+topic
+
+Description \+:
+
+This node takes a range as parameters and returns the laserscan /base\+\_\+scan filtered on this range on a chosen topic. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{angle__filter__node_8cpp_a3c965e0c2a6e544b25adb0a8e8a05640}\label{angle__filter__node_8cpp_a3c965e0c2a6e544b25adb0a8e8a05640}} 
+\index{angle\_filter\_node.cpp@{angle\_filter\_node.cpp}!scanCallback@{scanCallback}}
+\index{scanCallback@{scanCallback}!angle\_filter\_node.cpp@{angle\_filter\_node.cpp}}
+\doxysubsubsection{\texorpdfstring{scanCallback()}{scanCallback()}}
+{\footnotesize\ttfamily void scan\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Gets the scan values and publishes the chosen range to the scan topic. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & received Laser\+Scan msg.\\
+\hline
+\end{DoxyParams}
+Gets and formats the initial scan values to select the chosen range. Then creates a new Laser\+Scan message to be sent to the selected topic. 

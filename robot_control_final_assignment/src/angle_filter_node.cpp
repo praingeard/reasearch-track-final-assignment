@@ -1,15 +1,50 @@
+/**
+* \file angle_filter_node.cpp
+* \brief Filter angle ranges from a LaserScan
+* \author Paul Raingeard de la Blétière
+* \version 1.0
+* \date 12/03/2022
+* \param [in] min_angle Define the minimum angle of the chosen range.
+* \param [in] max_angle Define the maximum angle of the chosen range.
+* \param [in] scan_topic Define the topic name for the published scan.
+* \details
+*
+* Subscribes to: <BR>
+* ° /scan
+*
+* Publishes to: <BR>
+* ° /scan_topic
+*
+*
+* Description :
+*
+* This node takes a range as parameters and returns the laserscan /base_scan filtered on this range on a chosen topic.
+* 
+*
+**/
+
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 #include <algorithm>
 #include <vector>
 #include <string>
 
-ros::Publisher pub;
-double min_angle_scan;
-double max_angle_scan;
+ros::Publisher pub; ///< Publisher to the scan topic.
+double min_angle_scan; ///< Minimum angle of the chosen range.
+double max_angle_scan; ///< Maximum angle of the chosen range.
+
+/**
+* \brief Gets the scan values and publishes the chosen range to the scan topic.
+* \param msg received LaserScan msg.
+*
+* Gets and formats the initial scan values to select the chosen range. 
+* Then creates a new LaserScan message to be sent to the selected topic. 
+* 
+*/
 
 void scanCallback(const sensor_msgs::LaserScan &msg)
 {
+
     //initialize new scan
     sensor_msgs::LaserScan new_scan;
     double min_value = msg.angle_min;

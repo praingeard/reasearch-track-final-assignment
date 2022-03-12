@@ -1,3 +1,27 @@
+/**
+* \file control_node.cpp
+* \brief Blocks the robot for going to a wall in keyboard mode. 
+* \author Paul Raingeard de la Blétière
+* \version 1.0
+* \date 12/03/2022
+* \details
+*
+* Subscribes to: <BR>
+* ° /right_scan 
+* ° /left_scan 
+* ° /front_scan
+* ° /cmd_vel
+*
+* Publishes to: <BR>
+* ° /cmd_vel
+*
+*
+* Description :
+*
+* This node publishes the desired twist of the robot on the /cmd_vel topic by correcting the one given by the teleop_twist_keyboard.
+* 
+*
+**/
 
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
@@ -16,26 +40,68 @@ double scan_f;
 double dist_stop = 0.5;
 geometry_msgs::Twist speed;
 
+/**
+* \brief Gets the scan values from left scan range.
+* \param msg received LaserScan msg.
+*
+* Gets the minimal range from the left scan message and adds it to the scan_l variable. 
+* 
+*/
+
 //get all scan messages
 void scanLeftCallback(const sensor_msgs::LaserScan &msg)
 {
     scan_l = msg.range_min;
 }
 
+/**
+* \brief Gets the scan values from right scan range.
+* \param msg received LaserScan msg.
+*
+* Gets the minimal range from the right scan message and adds it to the scan_r variable. 
+* 
+*/
+
 void scanRightCallback(const sensor_msgs::LaserScan &msg)
 {
     scan_r = msg.range_min;
 }
+
+/**
+* \brief Gets the scan values from front scan range.
+* \param msg received LaserScan msg.
+*
+* Gets the minimal range from the front scan message and adds it to the scan_f variable. 
+* 
+*/
+
 void scanFrontCallback(const sensor_msgs::LaserScan &msg)
 {
     scan_f = msg.range_min;
 }
+
+/**
+* \brief Gets the speed sent by the teleop keyboard.
+* \param msg received Twist.
+*
+* Gets the Twist sent by the teleop_keyboard and adds it to the speed variable. 
+* 
+*/
 
 //get speed sent by teleop keyboard
 void speedCallback(const geometry_msgs::Twist &msg)
 {
     speed = msg;
 }
+
+/**
+* \brief Publishes the new speed of the robot.
+* \param event ROS Timer variable.
+*
+* Checks the position of the robot from the wall using the LaserScan minimum ranges.
+* Sets the linear or angular speed to 0 if needed. 
+* 
+*/
 
 //function for robot control
 void timerCallback(const ros::TimerEvent &event)

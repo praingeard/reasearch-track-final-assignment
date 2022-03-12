@@ -1,7 +1,23 @@
+/**
+* \file ui_node.cpp
+* \brief Lets the user choose the option to control the robot.
+* \author Paul Raingeard de la Blétière
+* \version 1.0
+* \date 12/03/2022
+* \details
+*
+*
+*
+* Description :
+*
+* This node implements the 3 modes (control using move_base, control by keyboard with or without help)
+* 
+*
+**/
+
 #include "ros/ros.h"
 #include <string>
 
-ros::Publisher pub;
 int main(int argc, char **argv)
 {
     // Initialize the node, setup the NodeHandle for handling the communication with the ROS
