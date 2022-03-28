@@ -2,7 +2,12 @@
 
 This code implements several nodes for controlling a robot simulation. The user can either control the robot by giving a goal or by hand using keyboard input.
 
-##prerequisites 
+## Documentation
+
+Get the full documentation [here](https://praingeard.github.io/research-track-final-assignment/)
+
+## prerequisites 
+
 To run the code you need to install the teleop_twist_keyboard package ( `sudo apt-get install ros-noetic-teleop-twist-keyboard` )
 and konsole ( `sudo apt-get install konsole`).
 
