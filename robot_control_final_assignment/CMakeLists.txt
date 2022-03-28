@@ -15,6 +15,17 @@ find_package(catkin REQUIRED COMPONENTS
   move_base_msgs
   actionlib
   actionlib_msgs
+  message_generation
+)
+
+add_service_files(
+  FILES
+  Mode.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 catkin_package()

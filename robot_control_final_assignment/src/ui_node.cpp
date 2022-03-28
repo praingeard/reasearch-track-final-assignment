@@ -1,76 +1,79 @@
 /**
-* \file ui_node.cpp
-* \brief Lets the user choose the option to control the robot.
-* \author Paul Raingeard de la Blétière
-* \version 1.0
-* \date 12/03/2022
-* \details
-*
-*
-*
-* Description :
-*
-* This node implements the 3 modes (control using move_base, control by keyboard with or without help)
-* 
-*
-**/
+ * \file ui_node.cpp
+ * \brief Lets the user choose the option to control the robot.
+ * \author Paul Raingeard de la Blétière
+ * \version 1.0
+ * \date 12/03/2022
+ * \details
+ *
+ *
+ *
+ * Description :
+ *
+ * This node implements the 3 modes (control using move_base, control by keyboard with or without help)
+ *
+ *
+ **/
 
 #include "ros/ros.h"
 #include <string>
+#include "robot_control_final_assignment/Mode.h"
+
+int mode = 0;
+bool mode_changed;
+
+bool modeCallback(robot_control_final_assignment::Mode::Request &req,
+                  robot_control_final_assignment::Mode::Response &res)
+{
+    mode = req.mode;
+    mode_changed = true;
+    return true;
+}
 
 int main(int argc, char **argv)
 {
     // Initialize the node, setup the NodeHandle for handling the communication with the ROS
-    //system
+    // system
 
     ros::init(argc, argv, "ui_node");
     ros::NodeHandle nh;
-
-    //initialize service clients
-    int input = 0;
+    ros::ServiceServer service = nh.advertiseService("mode", modeCallback);
 
     while (ros::ok)
     {
-        //getting input
-        ROS_INFO("Enter 1 to enter coordinates, 2 to control robot using keyboard and 3 to control the robot with help");
-        std::string str;
-        std::cin >> str;
-
-        //errors
-        try
+        ros::spinOnce();
+        if (mode_changed)
         {
-            input = std::stoi(str);
-        }
-        catch (const std::invalid_argument &error)
-        {
-            ROS_ERROR("Invalid input");
-        }
-        if (input < 1 || input > 3)
-        {
-            std::cout << "input must be between 1 and 3" << std::endl;
-        }
-
-        //starting necessary modules with konsole
-        if (input == 1)
-        {
-            ROS_INFO("Starting move_base console");
-            system("konsole -e rosrun robot_control_final_assignment move_base_position");
-        }
-        else if (input == 2)
-        {
-            ROS_INFO("Starting keyboard controller");
-            system("konsole -e rosrun teleop_twist_keyboard teleop_twist_keyboard.py _key_timeout:=0.6");
-        }
-        else if (input == 3)
-        {
-            ROS_INFO("Starting helping module");
-            int child = fork();
-            if (child ==0){
-            system("konsole -e rosrun teleop_twist_keyboard teleop_twist_keyboard.py _key_timeout:=0.6");
+            if (mode < 1 || mode > 3)
+            {
+                std::cout << "mode must be between 1 and 3" << std::endl;
             }
-            else{
-            system("konsole -e rosrun robot_control_final_assignment control");
+
+            // starting necessary modules with konsole
+            if (mode == 1)
+            {
+                ROS_INFO("Starting move_base console");
+                system("konsole -e rosrun robot_control_final_assignment move_base_position");
             }
+            else if (mode == 2)
+            {
+                ROS_INFO("Starting keyboard controller");
+                system("konsole -e rosrun teleop_twist_keyboard teleop_twist_keyboard.py _key_timeout:=0.6");
+            }
+            else if (mode == 3)
+            {
+                ROS_INFO("Starting helping module");
+                int child = fork();
+                if (child == 0)
+                {
+                    system("konsole -e rosrun teleop_twist_keyboard teleop_twist_keyboard.py _key_timeout:=0.6");
+                }
+                else
+                {
+                    system("konsole -e rosrun robot_control_final_assignment control");
+                }
+            }
+            mode_changed = false;
         }
     }
     return 0;
